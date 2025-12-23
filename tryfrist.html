@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>芙光璀璨 · 芙宁娜官方粉丝站</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 内联样式确保快速预览 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        .hero {
+            background-image: url('images/furina.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* 半透明黑色遮罩 */
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        .hero p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #00bfff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0096ff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+	<!-- 网站头部 -->
+  <header>
+    <img src="images/logo.png" alt="芙宁娜Logo" class="site-logo" />
+  </header>
+
+<div class="hero">
+    <div class="hero-content">
+        <h1>芙光璀璨 · 芙宁娜</h1>
+        <p>她是枫丹的歌剧明星，是水之神的化身，更是我们心中永不落幕的偶像。</p>
+        <a href="#about" class="btn">进入档案馆</a>
+    </div>
+</div>
+
+<!-- 可后续添加导航栏和内容区 -->
+<div id="about" style="padding: 40px; text-align: center;">
+    <h2>欢迎来到芙宁娜的世界</h2>
+    <p>这里记录着她的故事、她的舞台、她的光芒……</p>
+</div>
+
+</body>
+</html>
