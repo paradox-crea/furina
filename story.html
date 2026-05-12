@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芙宁娜 · 故事</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 53, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c1445, #1a237e);
+            color: #e3f2fd;
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+
+        /* 头部 */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #00e5ff;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #81d4fa;
+        }
+
+        /* 时间线 */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #00bfff, #00e5ff, #80deea);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            background: rgba(13, 19, 66, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            border-color: rgba(0, 191, 255, 0.5);
+            box-shadow: 0 8px 30px rgba(0, 191, 255, 0.2);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -35px;
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00e5ff;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+            border: 3px solid #0a0e35;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #00e5ff;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            color: #81d4fa;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content {
+            line-height: 1.8;
+            color: #b3e5fc;
+        }
+
+        .timeline-content p {
+            margin-bottom: 10px;
+        }
+
+        .timeline-tag {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(0, 191, 255, 0.2);
+            border-radius: 15px;
+            font-size: 0.85em;
+            color: #00e5ff;
+            margin-top: 10px;
+        }
+
+        /* 关键事件高亮 */
+        .highlight {
+            background: linear-gradient(135deg, rgba(139, 90, 240, 0.2), rgba(0, 191, 255, 0.1));
+            border-left: 4px solid #a78bfa;
+        }
+
+        .highlight::before {
+            background: #a78bfa;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.8);
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #81d4fa;
+            background: rgba(10, 14, 53, 0.9);
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .timeline {
+                padding-left: 25px;
+            }
+
+            .timeline::before {
+                left: 8px;
+            }
+
+            .timeline-item::before {
+                left: -28px;
+                width: 16px;
+                height: 16px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="intro.html">档案馆</a></li>
+            <li><a href="character.html">人物档案</a></li>
+            <li><a href="goddess-vs-human.html">神性解析</a></li>
+            <li><a href="trials.html">审判记录</a></li>
+            <li><a href="operas.html">歌剧艺术</a></li>
+            <li><a href="quotes.html">经典语录</a></li>
+        </ul>
+    </nav>
+
+    <!-- 头部 -->
+    <header>
+        <h1>📖 故事时间线</h1>
+        <p>芙宁娜五百年的传奇历程</p>
+    </header>
+
+    <!-- 时间线内容 -->
+    <div class="timeline-container">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">约500年前</div>
+                <div class="timeline-title">神格分裂</div>
+                <div class="timeline-content">
+                    <p>为应对即将到来的预言，水神芙卡洛斯将自己的神格一分为二。本体沉入原始胎海，而创造出人类形态的"芙宁娜"作为舞台上的神明，代行水神职责。从此，芙宁娜开始了她长达五百年的"表演"生涯。</p>
+                </div>
+                <div class="timeline-tag">起源</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">五百年间</div>
+                <div class="timeline-title">水神的统治</div>
+                <div class="timeline-content">
+                    <p>芙宁娜以水神之姿统治枫丹，成为民众心中的偶像。她既是威严的大法官，也是璀璨的歌剧明星。然而，这份荣耀的背后是无人知晓的孤独——她必须时刻维持完美的神性形象，将真实的情感深埋心底。</p>
+                </div>
+                <div class="timeline-tag">统治</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">4.0版本</div>
+                <div class="timeline-title">旅行者到来</div>
+                <div class="timeline-content">
+                    <p>旅行者来到枫丹，与芙宁娜初次相遇。此时的她依然以完美的水神形象示人，主持着枫丹的审判，同时也在暗中筹备着应对预言的计划。</p>
+                </div>
+                <div class="timeline-tag">相遇</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">4.1版本</div>
+                <div class="timeline-title">原始胎海之谜</div>
+                <div class="timeline-content">
+                    <p>关于原始胎海的秘密逐渐浮出水面。芙宁娜在审判中首次公开了部分真相，揭示了水元素与人类命运之间的深层联系。</p>
+                </div>
+                <div class="timeline-tag">揭秘</div>
+            </div>
+
+            <div class="timeline-item highlight">
+                <div class="timeline-date">4.2版本</div>
+                <div class="timeline-title">罪人舞步旋</div>
+                <div class="timeline-content">
+                    <p>这是芙宁娜作为水神的最后一场表演。在万众瞩目之下，她揭开了五百年的真相——原来她并非真正的神明，而是芙卡洛斯创造的人类容器。当预言终结，芙卡洛斯献出自己的神核，芙宁娜终于获得了真正的自由。</p>
+                </div>
+                <div class="timeline-tag">高潮</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">5.0版本及以后</div>
+                <div class="timeline-title">凡人的新生</div>
+                <div class="timeline-content">
+                    <p>卸任神位后，芙宁娜开始了她向往已久的平凡生活。她学会了饥饿，学会了流泪，学会了作为一个普通人去感受这个世界。曾经的舞台女王，如今在枫丹廷的街头巷尾，找到了属于自己的幸福。</p>
+                </div>
+                <div class="timeline-tag">新生</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer>
+        <p>芙光璀璨 · 芙宁娜官方粉丝站</p>
+    </footer>
+</body>
+</html>

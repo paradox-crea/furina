@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芙宁娜 · 档案馆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 53, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        /* 设置全屏背景图 */
+        body {
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+            background-image: url('images/罪人舞步旋.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #e3f2fd;
+            position: relative;
+            padding-top: 70px;
+        }
+
+        /* 半透明遮罩，提升文字可读性 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        /* 设置视频容器样式 */
+        .video-container {
+            width: 100%;
+            max-width: 960px;
+            margin: 20px auto;
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            z-index: 2;
+        }
+
+        /* 设置视频样式 */
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+        }
+
+        /* 内容区 */
+        .profile-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .intro-box {
+            background: rgba(13, 19, 66, 0.85);
+            padding: 30px;
+            border-radius: 16px;
+            font-size: 1.1em;
+            line-height: 1.8;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(79, 195, 247, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .intro-box h2 {
+            color: #00e5ff;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+        }
+
+        .intro-box p {
+            margin: 15px 0;
+        }
+
+        /* 按钮样式 */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(0, 100, 180, 0.7);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:hover {
+            background: rgba(0, 191, 255, 0.9);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+        }
+
+        .btn:hover::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* 手机适配 */
+        @media (max-width: 600px) {
+            .video-container {
+                height: 40vh;
+            }
+            .intro-box {
+                font-size: 1em;
+                padding: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="intro.html">档案馆</a></li>
+            <li><a href="character.html">人物档案</a></li>
+            <li><a href="goddess-vs-human.html">神性解析</a></li>
+            <li><a href="trials.html">审判记录</a></li>
+            <li><a href="operas.html">歌剧艺术</a></li>
+            <li><a href="quotes.html">经典语录</a></li>
+        </ul>
+    </nav>
+
+    <!-- 上半部分：视频 -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline controls>
+            <source src="videos/furina.mp4" type="video/mp4">
+            您的浏览器不支持视频。
+        </video>
+    </div>
+
+    <!-- 下半部分：自我介绍 -->
+    <div class="profile-section">
+        <div class="intro-box">
+            <h2>我是芙宁娜</h2>
+            <p>枫丹的歌剧明星，水之国的象征，亦是舞台上的永恒主角。</p>
+            <p>世人说我高傲、神秘，甚至有些戏剧化……但那又如何？人生本就是一场盛大的演出，而我，只是选择以最璀璨的方式登场。</p>
+            <p>欢迎你来到我的世界。在这里，每一滴水珠都映照星光，每一段旋律都诉说真心。</p>
+            <p style="font-style: italic; color: #81d4fa;">—— 芙宁娜</p>
+        </div>
+        
+        <div class="btn-group">
+            <a href="index.html" class="btn">← 返回首页</a>
+            <a href="character.html" class="btn">→ 进入人物档案</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芙宁娜 · 审判记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #0a0e35 0%, #1a1f5e 50%, #0d3d6e 100%);
+            color: #e3f2fd;
+            min-height: 100vh;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 53, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        /* 头部 */
+        header {
+            padding: 100px 20px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 191, 255, 0.1), transparent);
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #00e5ff;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #81d4fa;
+        }
+
+        /* 主要内容区 */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 审判案例卡片 */
+        .trial-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: rgba(10, 14, 53, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .trial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 191, 255, 0.2);
+        }
+
+        .trial-image {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 191, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .trial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .trial-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .trial-title {
+            color: #00e5ff;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #00e5ff;
+        }
+
+        .trial-date {
+            color: #81d4fa;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+        }
+
+        .trial-desc {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #b3e5fc;
+            margin-bottom: 15px;
+        }
+
+        .trial-highlight {
+            background: rgba(0, 191, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #00bfff;
+            margin-top: 20px;
+        }
+
+        .trial-highlight strong {
+            color: #00e5ff;
+        }
+
+        /* 审判风格分析 */
+        .analysis-section {
+            background: rgba(10, 14, 53, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+        }
+
+        .analysis-section h2 {
+            color: #00e5ff;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .analysis-card {
+            background: rgba(0, 191, 255, 0.08);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            text-align: center;
+        }
+
+        .analysis-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #00e5ff;
+        }
+
+        .analysis-card h3 {
+            color: #81d4fa;
+            margin-bottom: 10px;
+        }
+
+        .analysis-card p {
+            color: #b3e5fc;
+            line-height: 1.6;
+        }
+
+        /* 枫丹法律体系 */
+        .law-section {
+            background: rgba(10, 14, 53, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(79, 195, 247, 0.2);
+        }
+
+        .law-section h2 {
+            color: #00e5ff;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 4px solid #00e5ff;
+        }
+
+        .law-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .law-item {
+            background: rgba(0, 191, 255, 0.08);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .law-item h4 {
+            color: #81d4fa;
+            margin-bottom: 8px;
+        }
+
+        .law-item p {
+            color: #b3e5fc;
+            font-size: 0.95em;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #81d4fa;
+            background: rgba(10, 14, 53, 0.9);
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        /* 响应式 */
+        @media (max-width: 900px) {
+            .trial-card {
+                grid-template-columns: 1fr;
+            }
+
+            .law-content {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="intro.html">档案馆</a></li>
+            <li><a href="character.html">人物档案</a></li>
+            <li><a href="goddess-vs-human.html">神性解析</a></li>
+            <li><a href="trials.html">审判记录</a></li>
+            <li><a href="operas.html">歌剧艺术</a></li>
+            <li><a href="quotes.html">经典语录</a></li>
+        </ul>
+    </nav>
+
+    <!-- 头部 -->
+    <header>
+        <h1>⚖️ 枫丹廷审判记录</h1>
+        <p>见证水之审判者的传奇时刻</p>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="content">
+        <!-- 经典审判案例 -->
+        <div class="trial-card">
+            <div class="trial-image">
+                <img src="images/furina.png" alt="罪人舞步旋审判">
+            </div>
+            <div class="trial-info">
+                <div class="trial-title">罪人舞步旋</div>
+                <div class="trial-date">枫丹历 5.0版本</div>
+                <div class="trial-desc">
+                    这是芙宁娜作为水神的最后一场审判，也是枫丹历史上最重要的审判。面对即将到来的预言，芙宁娜必须在舞台上完成一场完美的表演——既是审判者，也是被告。
+                </div>
+                <div class="trial-desc">
+                    在这场审判中，她展现了无与伦比的演技和智慧，将整个枫丹廷变成了她的舞台。每一个眼神、每一句话都经过精心设计，只为引导真相浮出水面。
+                </div>
+                <div class="trial-highlight">
+                    <strong>经典台词：</strong>"我，芙宁娜，以水之神的名义宣判——这场戏，该落幕了。"
+                </div>
+            </div>
+        </div>
+
+        <div class="trial-card">
+            <div class="trial-image">
+                <img src="images/罪人舞步旋.jpg" alt="原始胎海之谜">
+            </div>
+            <div class="trial-info">
+                <div class="trial-title">原始胎海之谜</div>
+                <div class="trial-date">枫丹历 4.1版本</div>
+                <div class="trial-desc">
+                    关于原始胎海的神秘力量，一直是枫丹最古老的传说之一。芙宁娜在这场审判中，首次公开了关于胎海的部分秘密，揭示了水元素与人类命运之间的深层联系。
+                </div>
+                <div class="trial-desc">
+                    这场审判不仅是对案件本身的裁决，更是芙宁娜向民众展示水之威严的时刻。她以华丽的言辞和无可辩驳的证据，让所有质疑者哑口无言。
+                </div>
+                <div class="trial-highlight">
+                    <strong>审判亮点：</strong>首次将"水的记忆"引入法庭，开创了枫丹司法的新纪元。
+                </div>
+            </div>
+        </div>
+
+        <div class="trial-card">
+            <div class="trial-image">
+                <img src="images/furinapart.png" alt="歌剧院幽灵">
+            </div>
+            <div class="trial-info">
+                <div class="trial-title">歌剧院幽灵事件</div>
+                <div class="trial-date">枫丹历 4.0版本</div>
+                <div class="trial-desc">
+                    枫丹歌剧院发生了一系列离奇事件，有人声称看到了"幽灵"在夜间出没。作为歌剧院的常客和赞助人，芙宁娜亲自介入调查，并在法庭上揭开了真相。
+                </div>
+                <div class="trial-desc">
+                    这场审判充满了戏剧性，芙宁娜将法庭变成了第二个舞台，通过精心设计的问答，让隐藏在幕后的真凶无处遁形。
+                </div>
+                <div class="trial-highlight">
+                    <strong>经典台词：</strong>"在我面前，没有任何秘密能够隐藏——因为真相，永远是最好的剧本。"
+                </div>
+            </div>
+        </div>
+
+        <!-- 审判风格分析 -->
+        <div class="analysis-section">
+            <h2>芙宁娜的审判艺术</h2>
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <div class="analysis-icon">🎭</div>
+                    <h3>表演式审判</h3>
+                    <p>芙宁娜将审判视为一场戏剧，她善于通过夸张的肢体语言和富有感染力的言辞，引导观众（陪审团）进入她设定的叙事框架。</p>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-icon">💧</div>
+                    <h3>水之直觉</h3>
+                    <p>作为水神，她能够感知"水的记忆"，这赋予了她独特的洞察力。她常常能够捕捉到常人忽略的细节，从而找到案件的突破口。</p>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-icon">⚖️</div>
+                    <h3>绝对公正</h3>
+                    <p>尽管喜欢戏剧化的表现，但在最终裁决时，芙宁娜始终坚持公正原则。她深知，审判不仅仅是表演，更是对正义的守护。</p>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-icon">🎯</div>
+                    <h3>心理操控</h3>
+                    <p>她善于利用语言的力量，通过巧妙的提问和引导，让被告在不知不觉中暴露真相。她的审判风格被称为"温柔的逼供"。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 枫丹法律体系 -->
+        <div class="law-section">
+            <h2>枫丹法律体系解析</h2>
+            <div class="law-content">
+                <div>
+                    <h3 style="color: #81d4fa; margin-bottom: 15px;">核心原则</h3>
+                    <div class="law-item">
+                        <h4>水的契约</h4>
+                        <p>所有公民在法律面前平等，如同水滴汇入大海般不分高低。</p>
+                    </div>
+                    <div class="law-item">
+                        <h4>公开审判</h4>
+                        <p>重要案件必须公开审理，接受民众监督，体现司法透明。</p>
+                    </div>
+                    <div class="law-item">
+                        <h4>证据至上</h4>
+                        <p>判决必须基于确凿证据，任何主观臆断都不能成为定罪依据。</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #81d4fa; margin-bottom: 15px;">芙宁娜的贡献</h3>
+                    <div class="law-item">
+                        <h4>完善法典</h4>
+                        <p>在位期间，芙宁娜主持修订了多部重要法律，使枫丹的法律体系更加完善。</p>
+                    </div>
+                    <div class="law-item">
+                        <h4>建立陪审团制度</h4>
+                        <p>引入平民参与审判的机制，让司法更贴近民众，增强法律的公信力。</p>
+                    </div>
+                    <div class="law-item">
+                        <h4>推广法律教育</h4>
+                        <p>设立法律学堂，普及法律知识，让每个公民都了解自己的权利与义务。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer>
+        <p>芙光璀璨 · 芙宁娜官方粉丝站</p>
+    </footer>
+</body>
+</html>

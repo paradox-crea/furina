@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芙宁娜 · 经典语录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e35 0%, #1e1b4b 50%, #0d3d6e 100%);
+            color: #e3f2fd;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 53, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        /* 头部 */
+        header {
+            padding: 100px 20px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 191, 255, 0.1), transparent);
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #00e5ff;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #81d4fa;
+        }
+
+        /* 每日一句 */
+        .daily-quote {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 25px;
+            background: rgba(0, 191, 255, 0.1);
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            position: relative;
+        }
+
+        .daily-quote::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 1.5em;
+        }
+
+        .daily-quote::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 1.5em;
+        }
+
+        .daily-quote p {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #b3e5fc;
+            font-style: italic;
+        }
+
+        .daily-quote span {
+            display: block;
+            margin-top: 15px;
+            font-size: 1em;
+            color: #81d4fa;
+        }
+
+        /* 卡片翻牌效果 */
+        .quotes-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .flip-card {
+            perspective: 1000px;
+            height: 220px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, rgba(0, 191, 255, 0.2), rgba(79, 195, 247, 0.1));
+            border: 1px solid rgba(0, 191, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.2);
+        }
+
+        .flip-card-front .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #00e5ff;
+        }
+
+        .flip-card-front .hint {
+            color: #81d4fa;
+            font-size: 0.9em;
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, rgba(139, 90, 240, 0.2), rgba(167, 139, 250, 0.1));
+            border: 1px solid rgba(167, 139, 250, 0.4);
+            box-shadow: 0 4px 15px rgba(139, 90, 240, 0.2);
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back .quote-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #e0e7ff;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .flip-card-back .quote-source {
+            font-size: 0.85em;
+            color: #a5b4fc;
+            padding: 8px 15px;
+            background: rgba(167, 139, 250, 0.2);
+            border-radius: 20px;
+        }
+
+        .flip-card-back .quote-context {
+            font-size: 0.8em;
+            color: #81d4fa;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            max-height: 60px;
+            overflow: auto;
+        }
+
+        /* 分类标签 */
+        .categories {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 191, 255, 0.4);
+            background: rgba(0, 191, 255, 0.1);
+            color: #81d4fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.4);
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #81d4fa;
+            background: rgba(10, 14, 53, 0.9);
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+
+            .flip-card {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="intro.html">档案馆</a></li>
+            <li><a href="character.html">人物档案</a></li>
+            <li><a href="goddess-vs-human.html">神性解析</a></li>
+            <li><a href="trials.html">审判记录</a></li>
+            <li><a href="operas.html">歌剧艺术</a></li>
+            <li><a href="quotes.html">经典语录</a></li>
+        </ul>
+    </nav>
+
+    <!-- 头部 -->
+    <header>
+        <h1>💬 经典语录</h1>
+        <p>点击卡片翻牌查看芙宁娜的经典台词</p>
+    </header>
+
+    <!-- 每日一句 -->
+    <div class="daily-quote" id="dailyQuote">
+        <p id="quoteContent">今天也要华丽登场！即使是平凡的日子，也要活出歌剧女主角的姿态！</p>
+        <span id="quoteDate">—— 芙宁娜风格 · 每日一句</span>
+    </div>
+
+    <!-- 分类标签 -->
+    <div class="categories">
+        <button class="category-btn active" data-category="all">全部</button>
+        <button class="category-btn" data-category="main">主线剧情</button>
+        <button class="category-btn" data-category="legend">传说任务</button>
+        <button class="category-btn" data-category="daily">日常对话</button>
+        <button class="category-btn" data-category="opera">歌剧台词</button>
+    </div>
+
+    <!-- 语录卡片网格 -->
+    <div class="quotes-grid" id="quotesGrid">
+        <!-- 语录卡片将通过JavaScript动态生成 -->
+    </div>
+
+    <!-- 底部 -->
+    <footer>
+        <p>芙光璀璨 · 芙宁娜官方粉丝站</p>
+    </footer>
+
+    <script>
+        // 语录数据
+        const quotesData = [
+            {
+                text: "我，芙宁娜，以水之神的名义宣判——这场戏，该落幕了。",
+                source: "4.2主线剧情",
+                context: "在《罪人舞步旋》的高潮时刻，芙宁娜终于揭开了真相的面纱。",
+                category: "main"
+            },
+            {
+                text: "人生本就是一场盛大的演出，而我，只是选择以最璀璨的方式登场。",
+                source: "传说任务",
+                context: "芙宁娜在讲述自己的人生哲学时如是说。",
+                category: "legend"
+            },
+            {
+                text: "嗯？你在看什么？没见过优雅的女士吗？",
+                source: "日常对话",
+                context: "当旅行者盯着她看太久时，芙宁娜傲娇地说道。",
+                category: "daily"
+            },
+            {
+                text: "在月光下，我将化作涟漪，轻抚你的脸颊...",
+                source: "歌剧《水的女儿》",
+                context: "这是剧中最动人的咏叹调片段。",
+                category: "opera"
+            },
+            {
+                text: "原来，眼泪的味道是这样的...咸咸的，却又带着一丝温暖。",
+                source: "4.2主线剧情",
+                context: "卸任神位后，芙宁娜第一次流下了人类的眼泪。",
+                category: "main"
+            },
+            {
+                text: "完美的表演，需要完美的观众。",
+                source: "传说任务",
+                context: "芙宁娜对前来观看演出的旅行者说道。",
+                category: "legend"
+            },
+            {
+                text: "啊...好饿啊，有没有什么好吃的？蛋糕也行！",
+                source: "日常对话",
+                context: "失去神之权能后，芙宁娜终于感受到了饥饿。",
+                category: "daily"
+            },
+            {
+                text: "神明的剧本，终于迎来了最后的篇章。",
+                source: "歌剧《罪人舞步旋》",
+                context: "剧中的经典独白，暗示着命运的终结与新生。",
+                category: "opera"
+            },
+            {
+                text: "在我面前，没有任何秘密能够隐藏——因为真相，永远是最好的剧本。",
+                source: "4.1主线剧情",
+                context: "芙宁娜在审判开始前的宣言。",
+                category: "main"
+            },
+            {
+                text: "五百年的时光，我终于可以做回自己了。",
+                source: "4.2主线剧情",
+                context: "预言终结后，芙宁娜释然地说道。",
+                category: "main"
+            },
+            {
+                text: "每一滴水珠都映照星光，每一段旋律都诉说真心。",
+                source: "传说任务",
+                context: "芙宁娜在讲述枫丹的故事时说道。",
+                category: "legend"
+            },
+            {
+                text: "哎呀，又要工作了...真是麻烦，不过，为了枫丹的民众，本小姐就勉为其难吧。",
+                source: "日常对话",
+                context: "虽然嘴上抱怨，但芙宁娜依然认真地完成每一项工作。",
+                category: "daily"
+            }
+        ];
+
+        // 随机选择每日一句
+        const dailyQuotes = [
+            "今天也要华丽登场！即使是平凡的日子，也要活出歌剧女主角的姿态！",
+            "每一个瞬间都是舞台，每一次呼吸都是表演——这就是我的人生信条！",
+            "不要害怕展现真实的自己，因为真正的美源于真诚！",
+            "即使身处黑暗，也要像星星一样闪耀——这才是真正的优雅！",
+            "生活就像一场歌剧，你既是演员，也是观众。好好享受吧！",
+            "优雅不是天生的，而是一种选择——选择在任何时刻都保持美丽！",
+            "微笑吧，因为你永远不知道谁会被你的光芒所吸引！",
+            "即使剧本已经写好，你依然可以用自己的方式演绎！"
+        ];
+
+        // 初始化每日一句
+        function initDailyQuote() {
+            const today = new Date();
+            const index = today.getDate() % dailyQuotes.length;
+            document.getElementById('quoteContent').textContent = dailyQuotes[index];
+        }
+
+        // 生成语录卡片
+        function generateQuotes(category = 'all') {
+            const grid = document.getElementById('quotesGrid');
+            grid.innerHTML = '';
+
+            const filteredQuotes = category === 'all' 
+                ? quotesData 
+                : quotesData.filter(q => q.category === category);
+
+            filteredQuotes.forEach((quote, index) => {
+                const flipCard = document.createElement('div');
+                flipCard.className = 'flip-card';
+                flipCard.innerHTML = `
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="icon">🎭</div>
+                            <div class="hint">点击翻牌查看</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="quote-text">${quote.text}</div>
+                            <div class="quote-source">${quote.source}</div>
+                            <div class="quote-context">${quote.context}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(flipCard);
+            });
+        }
+
+        // 分类按钮事件
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 移除所有激活状态
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                // 添加当前按钮激活状态
+                btn.classList.add('active');
+                // 重新生成对应分类的语录
+                generateQuotes(btn.dataset.category);
+            });
+        });
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initDailyQuote();
+            generateQuotes();
+        });
+    </script>
+</body>
+</html>
