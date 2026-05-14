@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芙宁娜·德·枫丹 - 人物档案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c1445, #1a237e);
+            color: #e3f2fd;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 53, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        /* 主容器 */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        /* 信息框 */
+        .infobox {
+            background: rgba(13, 19, 66, 0.9);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            overflow: hidden;
+            position: sticky;
+            top: 100px;
+        }
+
+        .infobox .portrait {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        .infobox .portrait img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .infobox-title {
+            background: linear-gradient(135deg, rgba(0, 100, 180, 0.6), rgba(0, 150, 255, 0.4));
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: #00e5ff;
+            font-size: 1.1em;
+        }
+
+        .infobox-content {
+            padding: 15px;
+        }
+
+        .infobox-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.1);
+            font-size: 0.9em;
+        }
+
+        .infobox-row:last-child {
+            border-bottom: none;
+        }
+
+        .infobox-label {
+            color: #81d4fa;
+            font-weight: 500;
+        }
+
+        .infobox-value {
+            color: #e1f5fe;
+        }
+
+        /* 正文区域 */
+        .content {
+            background: rgba(13, 19, 66, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            padding: 30px;
+        }
+
+        /* 标题样式 */
+        .page-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #00e5ff;
+            text-shadow: 0 0 20px rgba(0, 238, 255, 0.7);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: #81d4fa;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #00e5ff;
+            border-left: 4px solid #00e5ff;
+            padding-left: 15px;
+            margin: 30px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #00e5ff;
+            border-radius: 50%;
+        }
+
+        /* 段落样式 */
+        .content p {
+            line-height: 1.9;
+            color: #b3e5fc;
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        /* 列表样式 */
+        .content ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content li {
+            line-height: 1.8;
+            color: #b3e5fc;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .content li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: #00e5ff;
+        }
+
+        /* 标签样式 */
+        .trait-tag {
+            display: inline-block;
+            background: rgba(0, 191, 255, 0.2);
+            border: 1px solid rgba(0, 191, 255, 0.3);
+            border-radius: 20px;
+            padding: 6px 14px;
+            margin: 6px;
+            font-size: 0.9em;
+            color: #81d4fa;
+        }
+
+        /* 引用样式 */
+        .quote {
+            background: rgba(0, 100, 180, 0.3);
+            border-left: 4px solid #00e5ff;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #b3e5fc;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* 底部导航 */
+        .nav-section {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: rgba(0, 100, 180, 0.6);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn:hover {
+            background: rgba(0, 191, 255, 0.9);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+        }
+
+        .btn:hover::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        .btn-purple {
+            background: rgba(139, 90, 240, 0.6);
+        }
+
+        .btn-purple:hover {
+            background: rgba(139, 90, 240, 0.9);
+            box-shadow: 0 0 15px rgba(139, 90, 240, 0.6);
+        }
+
+        /* 手机适配 */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .infobox {
+                position: static;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .page-title {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .nav-section .btn {
+                margin: 8px 10px;
+                padding: 10px 22px;
+                font-size: 0.9em;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="intro.html">档案馆</a></li>
+            <li><a href="character.html">人物档案</a></li>
+            <li><a href="goddess-vs-human.html">神性解析</a></li>
+            <li><a href="trials.html">审判记录</a></li>
+            <li><a href="operas.html">歌剧艺术</a></li>
+            <li><a href="quotes.html">经典语录</a></li>
+            <li><a href="gallery.html">图片画廊</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <!-- 信息框 -->
+        <div class="infobox">
+            <div class="portrait">
+                <img src="images/furinapart.png" alt="芙宁娜立绘">
+            </div>
+            <div class="infobox-title">基本信息</div>
+            <div class="infobox-content">
+                <div class="infobox-row">
+                    <span class="infobox-label">称号</span>
+                    <span class="infobox-value">水之主宰</span>
+                </div>
+                <div class="infobox-row">
+                    <span class="infobox-label">魔神名</span>
+                    <span class="infobox-value">芙卡洛斯</span>
+                </div>
+                <div class="infobox-row">
+                    <span class="infobox-label">神之心</span>
+                    <span class="infobox-value">水</span>
+                </div>
+                <div class="infobox-row">
+                    <span class="infobox-label">武器</span>
+                    <span class="infobox-value">法器</span>
+                </div>
+                <div class="infobox-row">
+                    <span class="infobox-label">所属</span>
+                    <span class="infobox-value">枫丹</span>
+                </div>
+                <div class="infobox-row">
+                    <span class="infobox-label">身份</span>
+                    <span class="infobox-value">末任水神</span>
+                </div>
+                <div class="infobox-row">
+                    <span class="infobox-label">种族</span>
+                    <span class="infobox-value">纯水精灵</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 正文区域 -->
+        <div class="content">
+            <h1 class="page-title">芙宁娜·德·枫丹</h1>
+            <p class="page-subtitle">Furina de Fontaine · 尘世七执政 · 水之主宰</p>
+
+            <div class="section-title">身份背景</div>
+            <p>芙宁娜是米哈游出品的游戏《原神》及其衍生作品中的角色，"尘世七执政"中的末任水神，众水、众方、众民与众律法的女王。她以纯水精灵之身转化为人类形态，统治着水之国枫丹长达五百年。</p>
+            <p>为应对继承自前代水神厄歌莉娅的预言危机，芙卡洛斯将自己的神格和人格分离开来。作为神格的"芙卡洛斯"躲在谕示机里积蓄日后执行水神审判所需的律偿混能，作为人格的"芙宁娜·德·枫丹"则负责继续在水神的位置上扮演神明的角色，欺骗天理。</p>
+            <p>在芙宁娜的统治下，审判既是枫丹最重要的公众活动，也是一场场精心编排的演出。真实与虚幻，闹剧和悲剧平等地上演，而她自己则既是舞台上光芒四射的歌剧明星，也是法庭上威严公正的审判者。</p>
+
+            <div class="section-title">相貌衣着</div>
+            <p>转化为人类形态的芙卡洛斯是一位外表娇小可爱的少女。她拥有一头带有浅蓝色挑染的白色长发，发漩处延伸出一根高高翘起的白色呆毛，如同水滴般的睫毛下方是一对异色瞳。</p>
+            <ul>
+                <li><strong>眼睛：</strong>左眼为深蓝色虹膜配浅色瞳孔，右眼为浅蓝色虹膜配深色瞳孔，双眼瞳孔均呈泪滴状</li>
+                <li><strong>发型：</strong>神格形态为白长直，人格形态为蓬松短发搭配两条卷发；卸下神职后，芙宁娜剪掉了两条卷发</li>
+                <li><strong>服饰：</strong>头戴印有鸢尾花的皇冠式礼帽，上身由海蓝色西装和白色晨礼服组成，形似鱼尾的后摆改良自女性礼服衬裙，下身搭配白色短裤和黑色腿环</li>
+            </ul>
+
+            <div class="section-title">性格特点</div>
+            <p>芙宁娜的性格具有鲜明的两面性：</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <span class="trait-tag">表面浮夸</span>
+                <span class="trait-tag">内心真诚</span>
+                <span class="trait-tag">热爱表演</span>
+                <span class="trait-tag">坚守正义</span>
+            </div>
+            <p><strong>对外形象：</strong>为了符合枫丹民众对神明的期待，芙宁娜刻意塑造了一个强势、耀眼且充满权威的形象。她热衷于戏剧表演，擅长故弄玄虚，浮夸的言辞与动作成为其标志性特征，沉醉于子民的崇拜与赞美。</p>
+            <p><strong>真实本性：</strong>实际上，芙宁娜本性谦逊，待人真诚有礼。她将"存续"视为最高的正义——以个人的痛苦换取枫丹人作为人类的降生以及存在于世间的资格。</p>
+
+            <div class="section-title">角色创作</div>
+            <p>IP团队对于水神芙宁娜的构想可以追溯到《原神》立项之时。作为一位性格特点鲜明的特殊神明，团队从最初就明确了她的定位——表面端着架子，私底下却是一位活泼的小姑娘。</p>
+            <p>为了展示她性格上的两面性，角色原画在设计上加入了很多矛盾的要素，比如条状的头发、异色的瞳孔等。而芙宁娜的"变装"设定也是原画一开始就想做的，设计了多套服装和发型，最终因研发限制和剧情需要，选择了两套最优方案呈现给玩家。</p>
+
+            <div class="quote">
+                "在枫丹，人并不对神背负罪孽，能下达判决的只有法律与裁判庭，他们甚至连水神也可以裁判。" —— 芙卡洛斯的正义观
+            </div>
+
+            <div class="section-title">角色图集</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 15px;">
+                <a href="gallery.html" style="text-decoration: none;">
+                    <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(0, 191, 255, 0.3); transition: all 0.3s;">
+                        <img src="images/kgg05enn.png" alt="优雅姿态" style="width: 100%; height: 100px; object-fit: cover;">
+                        <div style="background: rgba(0,0,0,0.7); padding: 8px; text-align: center; color: #b3e5fc; font-size: 0.85em;">优雅姿态</div>
+                    </div>
+                </a>
+                <a href="gallery.html" style="text-decoration: none;">
+                    <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(0, 191, 255, 0.3); transition: all 0.3s;">
+                        <img src="images/微信图片_20241209220348.jpg" alt="舞台风采" style="width: 100%; height: 100px; object-fit: cover;">
+                        <div style="background: rgba(0,0,0,0.7); padding: 8px; text-align: center; color: #b3e5fc; font-size: 0.85em;">舞台风采</div>
+                    </div>
+                </a>
+                <a href="gallery.html" style="text-decoration: none;">
+                    <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(0, 191, 255, 0.3); transition: all 0.3s;">
+                        <img src="images/微信图片_20241222101254.jpg" alt="水之祝福" style="width: 100%; height: 100px; object-fit: cover;">
+                        <div style="background: rgba(0,0,0,0.7); padding: 8px; text-align: center; color: #b3e5fc; font-size: 0.85em;">水之祝福</div>
+                    </div>
+                </a>
+                <a href="gallery.html" style="text-decoration: none;">
+                    <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(0, 191, 255, 0.3); transition: all 0.3s;">
+                        <img src="images/b4df3c85b6b0d69b64eee15ab62ec4610f0ab8c6.jpg" alt="深海幻境" style="width: 100%; height: 100px; object-fit: cover;">
+                        <div style="background: rgba(0,0,0,0.7); padding: 8px; text-align: center; color: #b3e5fc; font-size: 0.85em;">深海幻境</div>
+                    </div>
+                </a>
+            </div>
+            <p style="text-align: center; margin-top: 15px; color: #81d4fa; font-size: 0.9em;"><a href="gallery.html" style="color: #00e5ff;">点击查看完整画廊 →</a></p>
+        </div>
+    </div>
+
+    <!-- 导航按钮 -->
+    <div class="nav-section">
+        <a href="intro.html" class="btn">← 返回档案馆</a>
+        <a href="story.html" class="btn btn-purple">📖 阅读故事</a>
+        <a href="goddess-vs-human.html" class="btn">深入了解神性 →</a>
+    </div>
+</body>
+</html>

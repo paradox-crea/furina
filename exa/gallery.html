@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芙宁娜 · 图片画廊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e35 0%, #1e1b4b 50%, #0d3d6e 100%);
+            color: #e3f2fd;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 53, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 191, 255, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #b3e5fc;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background: rgba(0, 191, 255, 0.3);
+            color: #00e5ff;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        /* 头部 */
+        header {
+            padding: 100px 20px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 191, 255, 0.1), transparent);
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #00e5ff;
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #81d4fa;
+        }
+
+        /* 画廊网格 */
+        .gallery-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(167, 139, 250, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            border-color: rgba(167, 139, 250, 0.8);
+            box-shadow: 0 0 25px rgba(167, 139, 250, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
+            padding: 15px;
+            color: #e0e7ff;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .caption {
+            opacity: 1;
+        }
+
+        /* 灯箱效果 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 191, 255, 0.5);
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.3);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            color: #00e5ff;
+            transform: scale(1.1);
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #e0e7ff;
+            font-size: 1em;
+        }
+
+        /* 导航按钮 */
+        .lightbox-prev, .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-prev:hover, .lightbox-next:hover {
+            color: #00e5ff;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #81d4fa;
+            background: rgba(10, 14, 53, 0.9);
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .gallery-item img {
+                height: 150px;
+            }
+
+            .lightbox-close {
+                font-size: 1.5em;
+                right: 15px;
+            }
+
+            .lightbox-caption {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="intro.html">档案馆</a></li>
+            <li><a href="character.html">人物档案</a></li>
+            <li><a href="goddess-vs-human.html">神性解析</a></li>
+            <li><a href="trials.html">审判记录</a></li>
+            <li><a href="operas.html">歌剧艺术</a></li>
+            <li><a href="quotes.html">经典语录</a></li>
+            <li><a href="gallery.html">图片画廊</a></li>
+        </ul>
+    </nav>
+
+    <!-- 头部 -->
+    <header>
+        <h1>🖼️ 图片画廊</h1>
+        <p>点击图片查看大图，支持左右切换浏览</p>
+    </header>
+
+    <!-- 画廊内容 -->
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- 图片将通过JavaScript动态加载 -->
+    </div>
+
+    <!-- 灯箱 -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">×</span>
+        <span class="lightbox-prev" id="lightboxPrev">‹</span>
+        <img class="lightbox-content" id="lightboxImage" src="" alt="">
+        <span class="lightbox-caption" id="lightboxCaption"></span>
+        <span class="lightbox-next" id="lightboxNext">›</span>
+    </div>
+
+    <!-- 底部 -->
+    <footer>
+        <p>芙光璀璨 · 芙宁娜官方粉丝站 © 2024</p>
+    </footer>
+
+    <script>
+        // 图片数据
+        const images = [
+            { src: 'images/furina.png', caption: '芙宁娜立绘' },
+            { src: 'images/furinapart.png', caption: '芙宁娜半身像' },
+            { src: 'images/kgg05enn.png', caption: '优雅姿态' },
+            { src: 'images/b4df3c85b6b0d69b64eee15ab62ec4610f0ab8c6.jpg', caption: '深海幻境' },
+            { src: 'images/微信图片_20241209220348.jpg', caption: '舞台风采' },
+            { src: 'images/微信图片_20241222101254.jpg', caption: '水之祝福' },
+            { src: 'images/罪人舞步旋.jpg', caption: '罪人舞步旋' },
+            { src: 'images/sanzhounian.png', caption: '三周年庆典' },
+            { src: 'images/thirtfu.gif', caption: '灵动瞬间' },
+            { src: 'images/logo.png', caption: '粉丝站Logo' },
+            { src: 'images/屏幕截图 2025-12-21 001119.png', caption: '游戏截图' },
+            { src: 'images/1247373d4d2eef645d27401c6383c6c8.jpg', caption: '芙宁娜插画1' },
+            { src: 'images/2bdc7bbe79e4be6d84a816f9709ca9f6.jpg', caption: '芙宁娜插画2' },
+            { src: 'images/6dc26e879c7d111b17ac22a07d59f263.jpg', caption: '芙宁娜插画3' },
+            { src: 'images/714cb7cab653d1ab65cdac6a38cfdef4.jpg', caption: '芙宁娜插画4' },
+            { src: 'images/841192ad139877954de5371a076d21ce.jpg', caption: '芙宁娜插画5' },
+            { src: 'images/91e82a6e565b229f1ebb77f4507f341b.jpg', caption: '芙宁娜插画6' },
+            { src: 'images/990bda38e0e21f0eecbfaea87b85f642.jpg', caption: '芙宁娜插画7' },
+            { src: 'images/9f34f23df8a81601d2b95baede2ee102.jpg', caption: '芙宁娜插画8' },
+            { src: 'images/a7c04d91e17489e6e8532a18a23674bf.jpg', caption: '芙宁娜插画9' },
+            { src: 'images/a80bd77b6799d00b675118676aa73318.jpg', caption: '芙宁娜插画10' },
+            { src: 'images/de7054f003fec1af81f1e722fcd1d91f.jpg', caption: '芙宁娜插画11' },
+            { src: 'images/eb836547c4c9cb99f069b41ff2b93fff.jpg', caption: '芙宁娜插画12' },
+            { src: 'images/fa3ef6ce5eb53e9861dd18815ad754be.jpg', caption: '芙宁娜插画13' },
+            { src: 'images/fa8508e79bba8d5c8e14f22f5534f44a.jpg', caption: '芙宁娜插画14' },
+            { src: 'images/fc2af0971147f579ce645f8f287b4b04.jpg', caption: '芙宁娜插画15' },
+            { src: 'images/paimeng.jpeg', caption: '派蒙联动' }
+        ];
+
+        let currentIndex = 0;
+
+        // 渲染画廊
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            images.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${image.src}" alt="${image.caption}">
+                    <div class="caption">${image.caption}</div>
+                `;
+                item.addEventListener('click', () => openLightbox(index));
+                grid.appendChild(item);
+            });
+        }
+
+        // 打开灯箱
+        function openLightbox(index) {
+            currentIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImage');
+            const caption = document.getElementById('lightboxCaption');
+            
+            img.src = images[index].src;
+            caption.textContent = images[index].caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭灯箱
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 上一张
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateLightbox();
+        }
+
+        // 下一张
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateLightbox();
+        }
+
+        // 更新灯箱内容
+        function updateLightbox() {
+            const img = document.getElementById('lightboxImage');
+            const caption = document.getElementById('lightboxCaption');
+            img.src = images[currentIndex].src;
+            caption.textContent = images[currentIndex].caption;
+        }
+
+        // 事件监听
+        document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+        document.getElementById('lightboxPrev').addEventListener('click', prevImage);
+        document.getElementById('lightboxNext').addEventListener('click', nextImage);
+
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            else if (e.key === 'ArrowLeft') prevImage();
+            else if (e.key === 'ArrowRight') nextImage();
+        });
+
+        // 点击灯箱背景关闭
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeLightbox();
+            }
+        });
+
+        // 初始化
+        renderGallery();
+    </script>
+</body>
+</html>
