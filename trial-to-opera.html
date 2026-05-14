@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>审判落幕 · 歌剧开幕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+            background: linear-gradient(135deg, #0a0e35 0%, #1e1b4b 50%, #0d3d6e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 背景粒子效果 */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 229, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        .transition-container {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .gif-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .gif-wrapper img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            box-shadow: 
+                0 0 30px rgba(0, 191, 255, 0.5),
+                0 0 60px rgba(0, 191, 255, 0.3),
+                0 0 100px rgba(139, 90, 240, 0.2);
+            animation: glow-shift 4s ease-in-out infinite;
+        }
+
+        @keyframes glow-shift {
+            0%, 100% {
+                box-shadow: 
+                    0 0 30px rgba(0, 191, 255, 0.5),
+                    0 0 60px rgba(0, 191, 255, 0.3),
+                    0 0 100px rgba(139, 90, 240, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 0 40px rgba(139, 90, 240, 0.5),
+                    0 0 80px rgba(139, 90, 240, 0.3),
+                    0 0 120px rgba(0, 191, 255, 0.2);
+            }
+        }
+
+        /* 文字过渡动画 */
+        .transition-text {
+            animation: text-fade 3s ease-in-out;
+        }
+
+        .transition-text h2 {
+            font-size: 2.2em;
+            color: #c084fc;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.7);
+            margin-bottom: 15px;
+            animation: title-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(192, 132, 252, 0.5); }
+            50% { text-shadow: 0 0 35px rgba(192, 132, 252, 0.9); }
+        }
+
+        .transition-text p {
+            font-size: 1.2em;
+            color: #a5b4fc;
+            text-shadow: 0 0 10px rgba(165, 180, 252, 0.5);
+        }
+
+        /* 进度条 */
+        .progress-container {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: rgba(0, 191, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00bfff, #c084fc);
+            border-radius: 2px;
+            animation: progress 4s linear forwards;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #81d4fa;
+        }
+
+        /* 动画关键帧 */
+        @keyframes text-fade {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .gif-wrapper img {
+                max-width: 280px;
+            }
+            
+            .transition-text h2 {
+                font-size: 1.6em;
+            }
+            
+            .transition-text p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景粒子 -->
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 25%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 55%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 85%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 15%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 65%; animation-delay: 3.5s;"></div>
+    </div>
+
+    <div class="transition-container">
+        <div class="gif-wrapper">
+            <img src="images/=furina.gif" alt="芙宁娜审判到歌剧过渡">
+        </div>
+        
+        <div class="transition-text">
+            <h2>⚖️ 审判落幕 · 🎭 歌剧开幕</h2>
+            <p>从法庭到舞台，芙宁娜的传奇永不停歇</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-text">即将进入歌剧艺术殿堂...</div>
+        </div>
+    </div>
+
+    <script>
+        // 4秒后自动跳转到歌剧艺术页面
+        setTimeout(() => {
+            window.location.href = 'operas.html';
+        }, 4000);
+    </script>
+</body>
+</html>
